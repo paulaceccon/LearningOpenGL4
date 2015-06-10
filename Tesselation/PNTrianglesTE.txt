@@ -1,0 +1,104 @@
+#version 410 core
+
+layout(triangles, equal_spacing, ccw) in;
+
+uniform mat4 pMatrix;
+uniform mat4 mvMatrix;
+uniform mat3 normalMatrix;
+uniform int interpolationMode;
+
+struct OutputPatch
+{
+	vec3 vWorldPos_P1;
+	vec3 vWorldPos_P2;
+	vec3 vWorldPos_P3;
+
+	vec3 vWorldPos_B021;
+	vec3 vWorldPos_B012;
+	vec3 vWorldPos_B102;
+	vec3 vWorldPos_B201;
+	vec3 vWorldPos_B210;
+	vec3 vWorldPos_B120;
+	vec3 vWorldPos_B111;
+	
+	vec3 vNorm_N1;
+	vec3 vNorm_N2;
+	vec3 vNorm_N3;
+
+	vec3 vNorm_N101;
+	vec3 vNorm_N011;	
+	vec3 vNorm_N110;
+};
+
+in patch OutputPatch oPatch;
+
+// Input for the geometry shader
+out vec3 vWorldPos_GS;
+out vec3 vNorm_GS;
+
+vec3 Interpolate3D(vec3 v0, vec3 v1, vec3 v2)
+{
+    return vec3(gl_TessCoord.x) * v0 + vec3(gl_TessCoord.y) * v1 + vec3(gl_TessCoord.z) * v2;
+} 
+
+vec3 EvaluatePosition()
+{
+	float u = gl_TessCoord.x;
+	float v = gl_TessCoord.y;
+	float w = gl_TessCoord.z;
+
+	float uPow3 = pow(u, 3);
+	float vPow3 = pow(v, 3);
+	float wPow3 = pow(w, 3);
+	float uPow2 = pow(u, 2);
+	float vPow2 = pow(v, 2);
+	float wPow2 = pow(w, 2);
+
+	return oPatch.vWorldPos_P1 * wPow3 + 
+		   oPatch.vWorldPos_P2 * uPow3 +
+		   oPatch.vWorldPos_P3 * vPow3 +
+		   oPatch.vWorldPos_B210 * 3.0 * wPow2 * u +
+		   oPatch.vWorldPos_B120 * 3.0 * uPow2 * w +
+		   oPatch.vWorldPos_B201 * 3.0 * wPow2 * v +
+		   oPatch.vWorldPos_B021 * 3.0 * uPow2 * v +
+		   oPatch.vWorldPos_B102 * 3.0 * vPow2 * w +
+		   oPatch.vWorldPos_B012 * 3.0 * vPow2 * u +
+		   oPatch.vWorldPos_B111 * 6.0 * u * v * w;
+}
+
+vec3 EvaluateNormal()
+{
+	float u = gl_TessCoord.x;
+	float v = gl_TessCoord.y;
+	float w = gl_TessCoord.z;
+
+	float uPow3 = pow(u, 3);
+	float vPow3 = pow(v, 3);
+	float wPow3 = pow(w, 3);
+	float uPow2 = pow(u, 2);
+	float vPow2 = pow(v, 2);
+	float wPow2 = pow(w, 2);
+
+	if (interpolationMode == 1)
+	{
+		return oPatch.vNorm_N1 * wPow2 + oPatch.vNorm_N2 * uPow2 + oPatch.vNorm_N3 * vPow2 +
+			   oPatch.vNorm_N110 * w * u + 
+			   oPatch.vNorm_N011 * u * v +
+			   oPatch.vNorm_N101 * w * v;
+	}
+	else
+	{
+		return Interpolate3D(oPatch.vNorm_N1, oPatch.vNorm_N2, oPatch.vNorm_N3);
+	}
+}
+
+void main()
+{
+	vec3 pos = EvaluatePosition();
+	vec3 norm = EvaluateNormal();
+
+	vNorm_GS = normalize(normalMatrix * norm);
+	vWorldPos_GS = pos;
+	
+	gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
+}

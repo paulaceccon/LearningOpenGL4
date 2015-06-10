@@ -1,0 +1,27 @@
+#version 410 core
+
+// Define the number of CPs in the output patch
+layout (vertices = 3) out;
+
+uniform float tesselletaionLevel; 
+
+in vec3 vWorldPos_TCS[];
+in vec3 vNorm_TCS[];
+
+// Output for the tesselation evaluation shader
+out vec3 vEyePos_TES[];
+out vec3 vNorm_TES[];
+
+void main()
+{
+	// Set the control points of the output patch
+	vEyePos_TES[gl_InvocationID] = vEyePos_TCS[gl_InvocationID];
+	vNorm_TES[gl_InvocationID] = vNorm_TCS[gl_InvocationID];
+	
+	// Calculate the tesselation levels
+	gl_TessLevelOuter[0] = tesselletaionLevel;
+	gl_TessLevelOuter[1] = tesselletaionLevel;
+	gl_TessLevelOuter[2] = tesselletaionLevel;
+	
+	gl_TessLevelInner[0] = tesselletaionLevel;
+}

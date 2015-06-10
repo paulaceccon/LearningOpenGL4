@@ -1,0 +1,111 @@
+#version 410 core
+
+// Define the number of CPs in the output patch
+layout (vertices = 1) out;
+
+uniform float tesselletaionLevel; 
+
+in vec3 vWorldPos_TCS[];
+in vec3 vNorm_TCS[];
+
+struct OutputPatch
+{
+	vec3 vWorldPos_P1;
+	vec3 vWorldPos_P2;
+	vec3 vWorldPos_P3;
+
+	vec3 vWorldPos_B021;
+	vec3 vWorldPos_B012;
+	vec3 vWorldPos_B102;
+	vec3 vWorldPos_B201;
+	vec3 vWorldPos_B210;
+	vec3 vWorldPos_B120;
+	vec3 vWorldPos_B111;
+	
+	vec3 vNorm_N1;
+	vec3 vNorm_N2;
+	vec3 vNorm_N3;
+
+	vec3 vNorm_N101;
+	vec3 vNorm_N011;	
+	vec3 vNorm_N110;
+};
+
+// Attributes of the output CPs
+out patch OutputPatch oPatch;
+
+void CalcPositions()
+{
+	// The original vertices stay the same
+	oPatch.vWorldPos_P1 = vWorldPos_TCS[0];
+	oPatch.vWorldPos_P2 = vWorldPos_TCS[1];
+	oPatch.vWorldPos_P3 = vWorldPos_TCS[2];
+
+	float w12 = dot(vWorldPos_TCS[1] - vWorldPos_TCS[0], vNorm_TCS[0]);
+	float w21 = dot(vWorldPos_TCS[0] - vWorldPos_TCS[1], vNorm_TCS[1]);
+
+	float w23 = dot(vWorldPos_TCS[2] - vWorldPos_TCS[1], vNorm_TCS[1]);
+	float w32 = dot(vWorldPos_TCS[1] - vWorldPos_TCS[2], vNorm_TCS[2]);
+
+	float w31 = dot(vWorldPos_TCS[0] - vWorldPos_TCS[2], vNorm_TCS[2]);
+	float w13 = dot(vWorldPos_TCS[2] - vWorldPos_TCS[0], vNorm_TCS[0]);
+
+	// Generate two midpoints on each edge
+	oPatch.vWorldPos_B210 = (2.0 * vWorldPos_TCS[0] + vWorldPos_TCS[1] - w12 * vNorm_TCS[0]) / 3.0;
+	oPatch.vWorldPos_B120 = (2.0 * vWorldPos_TCS[1] + vWorldPos_TCS[0] - w21 * vNorm_TCS[1]) / 3.0;
+
+	oPatch.vWorldPos_B021 = (2.0 * vWorldPos_TCS[1] + vWorldPos_TCS[2] - w23 * vNorm_TCS[1]) / 3.0;
+	oPatch.vWorldPos_B012 = (2.0 * vWorldPos_TCS[2] + vWorldPos_TCS[1] - w32 * vNorm_TCS[2]) / 3.0;
+
+	oPatch.vWorldPos_B201 = (2.0 * vWorldPos_TCS[2] + vWorldPos_TCS[0] - w31 * vNorm_TCS[2]) / 3.0;
+	oPatch.vWorldPos_B102 = (2.0 * vWorldPos_TCS[0] + vWorldPos_TCS[2] - w13 * vNorm_TCS[0]) / 3.0;
+	
+	// Handle the center
+	vec3 v = (vWorldPos_TCS[0] + vWorldPos_TCS[1] + vWorldPos_TCS[2]) / 3.0;
+	vec3 e = (oPatch.vWorldPos_B021 + oPatch.vWorldPos_B012 + oPatch.vWorldPos_B102 + 
+	          oPatch.vWorldPos_B201 + oPatch.vWorldPos_B210 + oPatch.vWorldPos_B120) / 6.0;
+	oPatch.vWorldPos_B111 = e + (e - v) / 2.0;
+}
+
+void CalcNormals()
+{
+	// Set the control points of the output patch
+	oPatch.vNorm_N1 = normalize(vNorm_TCS[0]);
+	oPatch.vNorm_N2 = normalize(vNorm_TCS[1]);
+	oPatch.vNorm_N3 = normalize(vNorm_TCS[2]);
+
+	vec3 vector12 = vWorldPos_TCS[1] - vWorldPos_TCS[0];
+	vec3 normal12 = vNorm_TCS[0] + vNorm_TCS[1];
+	float v12 = 2.0 * dot(vector12, normal12) / dot(vector12, vector12);
+					  
+	vec3 vector23 = vWorldPos_TCS[3] - vWorldPos_TCS[1];
+	vec3 normal23 = vNorm_TCS[1] + vNorm_TCS[3];
+	float v23 = 2.0 * dot(vector23, normal23) / dot(vector23, vector23);
+	
+	vec3 vector31 = vWorldPos_TCS[0] - vWorldPos_TCS[2];
+	vec3 normal31 = vNorm_TCS[2] + vNorm_TCS[0];
+	float v31 = 2.0 * dot(vector31, normal31) / 
+	                  dot(vector31, vector31);
+
+	vec3 h110 = normal12 - v12 * vector12;
+	vec3 h011 = normal23 - v23 * vector23;
+	vec3 h101 = normal31 - v31 * vector31;
+
+	oPatch.vNorm_N110 = normalize(h110);
+	oPatch.vNorm_N011 = normalize(h011);
+	oPatch.vNorm_N101 = normalize(h101);
+}
+
+void main()
+{
+	CalcPositions();
+	CalcNormals();
+
+	// Set the tesselation level
+	gl_TessLevelOuter[0] = tesselletaionLevel;
+	gl_TessLevelOuter[1] = tesselletaionLevel;
+	gl_TessLevelOuter[2] = tesselletaionLevel;
+	
+	gl_TessLevelInner[0] = tesselletaionLevel;
+}
+

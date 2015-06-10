@@ -1,0 +1,47 @@
+#version 410 core
+
+uniform vec3 vLightPosition;
+uniform vec4 ambientColor;
+uniform vec4 diffuseColor;
+uniform vec4 specularColor;
+uniform int wireframe; 
+
+in vec3 vPos_FS;
+in vec3 vNorm_FS;
+in vec3 gTriDistance;
+
+out vec4 fragColor;
+
+float amplify(float d, float scale, float offset)
+{
+    d = scale * d + offset;
+    d = clamp(d, 0, 1);
+    d = 1 - exp2(-2 * d * d);
+    return d;
+}
+
+void main()
+{ 
+	vec3 L = normalize(vLightPosition - vPos_FS);   
+    vec3 E = normalize(-vPos_FS);
+    vec3 R = normalize(-reflect(L, vNorm_FS));  
+ 
+   //calculate Ambient Term:  
+   vec4 Iamb = ambientColor;    
+
+   //calculate Diffuse Term:  
+   vec4 Idiff = diffuseColor * max(dot(vNorm_FS, L), 0.0);
+   Idiff = clamp(Idiff, 0.0, 1.0);     
+   
+   // calculate Specular Term:
+   vec4 Ispec = specularColor * pow(max(dot(R, E), 0.0), 0.3 * 128.0);
+   Ispec = clamp(Ispec, 0.0, 1.0); 
+
+   fragColor = Iamb + Idiff + Ispec; 
+
+   if (wireframe == 1)
+   {
+		float d1 = min(min(gTriDistance.x, gTriDistance.y ), gTriDistance.z);
+		fragColor = fragColor * amplify(d1, 60, -0.5);
+	}
+};
