@@ -15,3 +15,5 @@ Topics:
 0. Deferred Shading (*refactoring*)
 0. Tesselation (*in progress*)
 0. Tesselation + PNTriangles (*in progress*)
+
+Tips for setting OpenGL depencies on VS can be found [here](http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express).
