@@ -9,6 +9,6 @@ smooth out vec3 vNorm_TCS;
 
 void main() 
 {
-	vNorm_TCS = vNormal;
+	vNorm_TCS = normalize(vNormal);
 	vWorldPos_TCS = vec3(vPosition);       
 }                                     

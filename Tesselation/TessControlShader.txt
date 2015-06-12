@@ -9,13 +9,13 @@ in vec3 vWorldPos_TCS[];
 in vec3 vNorm_TCS[];
 
 // Output for the tesselation evaluation shader
-out vec3 vEyePos_TES[];
+out vec3 vWorldPos_TES[];
 out vec3 vNorm_TES[];
 
 void main()
 {
 	// Set the control points of the output patch
-	vEyePos_TES[gl_InvocationID] = vEyePos_TCS[gl_InvocationID];
+	vWorldPos_TES[gl_InvocationID] = vWorldPos_TCS[gl_InvocationID];
 	vNorm_TES[gl_InvocationID] = vNorm_TCS[gl_InvocationID];
 	
 	// Calculate the tesselation levels

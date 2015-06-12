@@ -5,8 +5,6 @@
 // Include the standard C++ headers 
 #include <glm/gtc/type_ptr.hpp> 
 
-#include "GLUtils.h"
-
 
 TesselationShaderProgram::TesselationShaderProgram()
 {
@@ -32,7 +30,6 @@ void TesselationShaderProgram::CreateShaderProgram(const std::string modelPath)
 	{
 		BuildModel(modelPath);
 		BuildVAO();
-		CheckOpenGLError();
 	}
 }
 
@@ -48,7 +45,6 @@ void TesselationShaderProgram::DrawModel(const glm::mat4 &projection, const glm:
 		glBindVertexArray(_vao);
 		LoadUniformVariables();
 		glPatchParameteri(GL_PATCH_VERTICES, 3);
-		//glDrawArrays(GL_PATCHES, 0, _modelCoordinates.size());
 		glDrawElements(GL_PATCHES, _modelTriangulation.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
@@ -92,8 +88,8 @@ void TesselationShaderProgram::LoadUniformVariables()
 	glm::mat4 MV = _modelView;
 	glm::mat4 P = _projection;
 	glm::mat3 N = glm::transpose(glm::inverse(glm::mat3(MV)));
-	glm::vec4 AC = glm::vec4(0.4, 0.4, 0.4, 1.0);
-	glm::vec4 DC = glm::vec4(0.7, 0.5, 0.0, 1.0);
+	glm::vec4 AC = glm::vec4(0.2, 0.2, 0.2, 1.0);
+	glm::vec4 DC = glm::vec4(0.999, 0.5, 0.0, 1.0);
 	glm::vec4 SC = glm::vec4(0.3, 0.3, 0.3, 1.0);
 	glm::vec3 LP = glm::vec3(0.0, 4.0, 2.0);
 

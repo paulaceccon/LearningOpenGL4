@@ -35,6 +35,7 @@ in patch OutputPatch oPatch;
 // Input for the geometry shader
 out vec3 vWorldPos_GS;
 out vec3 vNorm_GS;
+out vec3 tePatchDistance;
 
 vec3 Interpolate3D(vec3 v0, vec3 v1, vec3 v2)
 {
@@ -96,6 +97,8 @@ void main()
 {
 	vec3 pos = EvaluatePosition();
 	vec3 norm = EvaluateNormal();
+	
+	tePatchDistance = gl_TessCoord;
 
 	vNorm_GS = normalize(normalMatrix * norm);
 	vWorldPos_GS = pos;

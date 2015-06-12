@@ -1,8 +1,8 @@
 // Include custom C++ headers
 #include "SimpleOBJLoader.h"
+#include <map>
 #include <fstream>
 #include <iostream>
-#include <map>
 
 SimpleOBJLoader::SimpleOBJLoader()
 {
@@ -157,17 +157,13 @@ bool SimpleOBJLoader::ReadOBJ(const char* path, std::vector<float> &vertices, st
 }*/
 
 
-bool SimpleOBJLoader::ReadOFF(const char* path, std::vector<float> &vertices, std::vector<float> &normals)
+bool SimpleOBJLoader::ReadOFF(const char* path, std::vector<float> &vertices, std::vector<float> &normals, std::vector<unsigned int> &triangulation)
 {
-	/*std::vector<unsigned int> vertexIndices, normalIndices;
-	std::vector<glm::vec3> temp_vertices;
-	std::vector< glm::vec3 > temp_normals;
-
 	std::ifstream fileMesh(path);
 	if (fileMesh.fail())
 	{
 		std::cout << "Falha ao abrir o arquivo: " << path << std::endl << std::endl;
-		return;
+		return false;
 	}
 
 	int numberVertexs, numberTriangles;
@@ -176,8 +172,7 @@ bool SimpleOBJLoader::ReadOFF(const char* path, std::vector<float> &vertices, st
 	vertices.reserve(3 * numberVertexs);
 	normals.resize(3 * numberVertexs, 0);
 
-	std::vector<int> triangleList;
-	triangleList.reserve(3 * numberTriangles);
+	triangulation.reserve(3 * numberTriangles);
 
 	int lixo;
 	float x, y, z;
@@ -195,17 +190,16 @@ bool SimpleOBJLoader::ReadOFF(const char* path, std::vector<float> &vertices, st
 	for (int i = 0; i < numberTriangles; i++)
 	{
 		fileMesh >> lixo >> v1 >> v2 >> v3;
-		triangleList.push_back(v1);
-		triangleList.push_back(v2);
-		triangleList.push_back(v3);
+		triangulation.push_back(v1);
+		triangulation.push_back(v2);
+		triangulation.push_back(v3);
 	}
 
 	for (int i = 0; i < numberTriangles; i++)
 	{
-		
-		v0 = triangleList[3 * i + 0];
-		v1 = triangleList[3 * i + 1];
-		v2 = triangleList[3 * i + 2];
+		v0 = triangulation[3 * i + 0];
+		v1 = triangulation[3 * i + 1];
+		v2 = triangulation[3 * i + 2];
 
 		//calcula os vetores
 		double x1, y1, z1, x2, y2, z2, x, y, z;
@@ -217,14 +211,22 @@ bool SimpleOBJLoader::ReadOFF(const char* path, std::vector<float> &vertices, st
 		y2 = vertices[3 * v2 + 1] - vertices[3 * v0 + 1];
 		z2 = vertices[3 * v2 + 2] - vertices[3 * v0 + 2];
 
-		double x = y1 * z2 - z1 * y2;
-		double y = z1 * x2 - x1*z2;
-		double z = x1 * y2 - y1*x2;
+		x = y1 * z2 - z1 * y2;
+		y = z1 * x2 - x1 * z2;
+		z = x1 * y2 - y1 * x2;
 
-		normals[3 * i + 0] += x;
-		normals[3 * i + 1] += y;
-		normals[3 * i + 2] += z;
+		normals[3 * v0 + 0] += x;
+		normals[3 * v0 + 1] += y;
+		normals[3 * v0 + 2] += z;
+
+		normals[3 * v1 + 0] += x;
+		normals[3 * v1 + 1] += y;
+		normals[3 * v1 + 2] += z;
+
+		normals[3 * v2 + 0] += x;
+		normals[3 * v2 + 1] += y;
+		normals[3 * v2 + 2] += z;
 	}
-	*/
+	
 	return true;
 }

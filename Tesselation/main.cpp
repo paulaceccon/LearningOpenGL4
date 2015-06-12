@@ -14,6 +14,7 @@
 #include "GLUtils.h"
 #include "TesselationShaderProgram.h"
 
+
 #define PI 3.141592f  /* pi */
 
 // Interaction
@@ -26,6 +27,8 @@ GLint width = 640, height = 640;
 GLfloat tessLevel = 1.0;
 GLint wireframe = 1;
 GLint interpolation = 1;
+
+bool pnTriagles = true;
 
 
 // Define the model view matrix stack
@@ -172,10 +175,16 @@ int main(void)
 	// Shader Program
 	TesselationShaderProgram tessShader;
 	tessShader.SetVertexShader("SimpleVertexShader.txt");
-	//tessShader.SetTesselationControlShader("TessControlShader.txt");
-	//tessShader.SetTesselationEvaluationShader("TessEvalShader.txt");
+	if (pnTriagles)
+	{
 	tessShader.SetTesselationControlShader("PNTrianglesTC.txt");
 	tessShader.SetTesselationEvaluationShader("PNTrianglesTE.txt");
+	}
+	else
+	{
+		tessShader.SetTesselationControlShader("TessControlShader.txt");
+		tessShader.SetTesselationEvaluationShader("TessEvalShader.txt");
+	}
 	tessShader.SetGeometryShader("Wireframe.txt");
 	tessShader.SetFragmentShader("SimpleFragShader.txt");
 	tessShader.CreateShaderProgram("lowres_bunny.obj");
