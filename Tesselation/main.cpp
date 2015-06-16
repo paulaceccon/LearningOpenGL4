@@ -187,7 +187,7 @@ int main(void)
 	}
 	tessShader.SetGeometryShader("Wireframe.txt");
 	tessShader.SetFragmentShader("SimpleFragShader.txt");
-	tessShader.CreateShaderProgram("20bunny.obj");
+	tessShader.CreateShaderProgram("lowres_bunny.obj");
 
 	// Main Loop   
 	while (!glfwWindowShouldClose(window))
