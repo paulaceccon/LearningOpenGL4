@@ -70,9 +70,9 @@ void CalcPositions()
 void CalcNormals()
 {
 	// Set the control points of the output patch
-	oPatch.vNorm_N1 = (vNorm_TCS[0]);
-	oPatch.vNorm_N2 = (vNorm_TCS[1]);
-	oPatch.vNorm_N3 = (vNorm_TCS[2]);
+	oPatch.vNorm_N1 = normalize(vNorm_TCS[0]);
+	oPatch.vNorm_N2 = normalize(vNorm_TCS[1]);
+	oPatch.vNorm_N3 = normalize(vNorm_TCS[2]);
 
 	vec3 vector12 = vWorldPos_TCS[1] - vWorldPos_TCS[0];
 	vec3 normal12 = vNorm_TCS[0] + vNorm_TCS[1];

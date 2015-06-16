@@ -177,8 +177,8 @@ int main(void)
 	tessShader.SetVertexShader("SimpleVertexShader.txt");
 	if (pnTriagles)
 	{
-	tessShader.SetTesselationControlShader("PNTrianglesTC.txt");
-	tessShader.SetTesselationEvaluationShader("PNTrianglesTE.txt");
+		tessShader.SetTesselationControlShader("PNTrianglesTC.txt");
+		tessShader.SetTesselationEvaluationShader("PNTrianglesTE.txt");
 	}
 	else
 	{
@@ -187,12 +187,13 @@ int main(void)
 	}
 	tessShader.SetGeometryShader("Wireframe.txt");
 	tessShader.SetFragmentShader("SimpleFragShader.txt");
-	tessShader.CreateShaderProgram("lowres_bunny.obj");
+	tessShader.CreateShaderProgram("20bunny.obj");
 
 	// Main Loop   
 	while (!glfwWindowShouldClose(window))
 	{
 		// Clear color buffer  
+		glClearColor(1, 1, 1, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Clone current modelview matrix, which can now be modified 

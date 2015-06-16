@@ -89,14 +89,14 @@ vec3 EvaluateNormal()
 	}
 	else
 	{
-		return Interpolate3D(oPatch.vNorm_N1, oPatch.vNorm_N2, oPatch.vNorm_N3);
+		return Interpolate3D(oPatch.vNorm_N2, oPatch.vNorm_N3, oPatch.vNorm_N1);
 	}
 }
 
 void main()
 {
 	vec3 pos = EvaluatePosition();
-	vec3 norm = EvaluateNormal();
+	vec3 norm = normalize(EvaluateNormal());
 	
 	tePatchDistance = gl_TessCoord;
 
