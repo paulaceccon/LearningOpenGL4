@@ -8,7 +8,7 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 Topics:
 
 0. Skeleton (*done*)
-0. VBO+VAO (*refactoring*)
+0. VBO+VAO (*done*)
 0. VBO+VAO+IBO (*refactoring*)
 0. Texture (*refactoring*)
 0. Instancing (*refactoring*)
