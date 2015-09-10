@@ -13,7 +13,15 @@ Topics:
 0. Texture (*refactoring*)
 0. Instancing (*refactoring*)
 0. Deferred Shading (*refactoring*)
-0. Tesselation (*in progress*)
-0. Tesselation + PNTriangles (*in progress*)
+0. Tesselation (*done*)
+0. Tesselation + PNTriangles (*done*)
+  
+  Tesselation controls:
+  * W - wireframe mode on*/off
+  * I - interpolation mode (linear, quadratic*)
+  * ENTER - x2 tesselation level
+  * BACKSPACE - /2 tesselation level
+  
+_*_ *default*
 
 Tips for setting OpenGL depencies on VS can be found [here](http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express).
