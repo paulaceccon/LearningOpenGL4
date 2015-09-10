@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skeleton", "Skeleton\Skelet
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tesselation", "Tesselation\Tesselation.vcxproj", "{159E507F-76E1-4122-9101-F0D3CB29F251}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VBO_VBA", "VBO_VBA\VBO_VBA.vcxproj", "{BA2A9590-4193-47AD-8F76-5CAB1EB4A90B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{159E507F-76E1-4122-9101-F0D3CB29F251}.Debug|Win32.Build.0 = Debug|Win32
 		{159E507F-76E1-4122-9101-F0D3CB29F251}.Release|Win32.ActiveCfg = Release|Win32
 		{159E507F-76E1-4122-9101-F0D3CB29F251}.Release|Win32.Build.0 = Release|Win32
+		{BA2A9590-4193-47AD-8F76-5CAB1EB4A90B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BA2A9590-4193-47AD-8F76-5CAB1EB4A90B}.Debug|Win32.Build.0 = Debug|Win32
+		{BA2A9590-4193-47AD-8F76-5CAB1EB4A90B}.Release|Win32.ActiveCfg = Release|Win32
+		{BA2A9590-4193-47AD-8F76-5CAB1EB4A90B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
