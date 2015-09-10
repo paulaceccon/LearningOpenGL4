@@ -9,7 +9,7 @@ Topics:
 
 0. Skeleton (*done*)
 0. VBO+VAO (*done*)
-0. VBO+VAO+IBO (*refactoring*)
+0. VBO+VAO+IBO (*done*)
 0. Texture (*refactoring*)
 0. Instancing (*refactoring*)
 0. Deferred Shading (*refactoring*)
