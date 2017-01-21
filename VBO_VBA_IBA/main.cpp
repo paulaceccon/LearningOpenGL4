@@ -34,7 +34,7 @@ glm::mat4 Projection = glm::perspective(45.0f, (float)width / height, 1.0f, 100.
 static void ErrorCallback(int error, const char* description)
 {
 	fputs(description, stderr);
-	_fgetchar();
+	getchar();
 }
 
 
@@ -198,3 +198,5 @@ int main(void)
 
 	exit(EXIT_SUCCESS);
 }
+
+//g++ main.cpp -o main.out -framework OpenGL -L/usr/local/Cellar/glew/2.0.0/lib/ -L/usr/local/Cellar/glfw/3.2.1/lib -lglew -lglfw -I/usr/local/Cellar/glew/2.0.0/include/ -I/usr/local/Cellar/glfw/3.2.1/include -I/usr/local/Cellar/glm/0.9.8.3/include -I

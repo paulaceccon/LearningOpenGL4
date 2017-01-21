@@ -64,21 +64,6 @@ public:
 	void SetFragmentShader(const std::string fragmentShaderPath);
 
 	/**
-	*  Set the tesselation control shader path.
-	**/
-	void SetTesselationControlShader(const std::string tesselationControlPath);
-	
-	/**
-	*  Set the tesselation evaluation shader path.
-	**/
-	void SetTesselationEvaluationShader(const std::string tesselationEvaluationPath);
-
-	/**
-	*  Set the geometry evaluation shader path.
-	**/
-	void SetGeometryShader(const std::string geometryShaderPath);
-
-	/**
 	*  Load all attribute variables that a shader program need to run.
 	**/
 	virtual void LoadAttributeVariables() = 0;
@@ -105,16 +90,10 @@ private:
 	// The fragment shader path.
 	std::string _fragmentShaderPath;
 
-	// The tesselation control shader path.
-	std::string _tesselationControlPath;
-
-	// The tesselation evaluation shader path.
-	std::string _tesselationEvaluationPath;
-
 	// The geometry shader path.
 	std::string _geometryShaderPath;
 
 	// The shaders IDs.
-	GLuint _vertexShader, _fragmentShader, _tesselationControlShader, _tesselationEvaluationShader, _geometryShader;
+	GLuint _vertexShader, _fragmentShader;
 };
 

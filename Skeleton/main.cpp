@@ -33,7 +33,7 @@ glm::mat4 Projection = glm::perspective(45.0f, (float) width / height, 1.0f, 100
 static void ErrorCallback(int error, const char* description)
 {
 	fputs(description, stderr);
-	_fgetchar();
+	getchar();
 }
 
 

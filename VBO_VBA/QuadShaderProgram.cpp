@@ -113,4 +113,3 @@ void QuadShaderProgram::LoadAttributeVariables()
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo[1]);
 	glVertexAttribPointer(VertexColor_location, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
-
