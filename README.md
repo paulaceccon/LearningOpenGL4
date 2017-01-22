@@ -15,8 +15,8 @@ Topics:
   - From file
 - [ ] Instancing (*refactoring*)
 - [ ] Deferred Shading (*refactoring*)
-- [ ] Tesselation (*done*)
-- [ ] Tesselation + PNTriangles (*done*)
+- [x] Tesselation
+- [x] Tesselation + PNTriangles
   
   Tesselation controls:
   * W - wireframe mode on*/off
