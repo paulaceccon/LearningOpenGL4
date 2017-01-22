@@ -50,10 +50,9 @@ void QuadShaderProgram::DrawModel(const glm::mat4 &projection, const glm::mat4 &
 
 void QuadShaderProgram::BuildModel()
 {
-
-	_modelCoordinates = { 1.0f, 1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f, 1.0f, 0.0f,
+	_modelCoordinates = { 1.0f,  1.0f, 0.0f,
+		                  1.0f, -1.0f, 0.0f,
+		                 -1.0f,  1.0f, 0.0f,
 		-1.0f, 1.0f, 0.0f,
 		1.0f, -1.0f, 0.0f,
 		-1.0f, -1.0f, 0.0f };
