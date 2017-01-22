@@ -7,14 +7,16 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 
 Topics:
 
-0. Skeleton (*done*)
-0. VBO+VAO (*done*)
-0. VBO+VAO+IBO (*done*)
-0. Texture (*refactoring*)
-0. Instancing (*refactoring*)
-0. Deferred Shading (*refactoring*)
-0. Tesselation (*done*)
-0. Tesselation + PNTriangles (*done*)
+- [x] Skeleton 
+- [x] VBO+VAO
+- [x] VBO+VAO+IBO 
+- [ ] Texture (*refactoring*)
+  - From image
+  - From file
+- [ ] Instancing (*refactoring*)
+- [ ] Deferred Shading (*refactoring*)
+- [ ] Tesselation (*done*)
+- [ ] Tesselation + PNTriangles (*done*)
   
   Tesselation controls:
   * W - wireframe mode on*/off
