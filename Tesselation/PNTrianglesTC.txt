@@ -32,7 +32,7 @@ struct OutputPatch
 };
 
 // Attributes of the output CPs
-out patch OutputPatch oPatch;
+patch out OutputPatch oPatch;
 
 void CalcPositions()
 {

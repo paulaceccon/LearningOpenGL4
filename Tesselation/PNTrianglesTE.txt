@@ -30,7 +30,7 @@ struct OutputPatch
 	vec3 vNorm_N110;
 };
 
-in patch OutputPatch oPatch;
+patch in OutputPatch oPatch;
 
 // Input for the geometry shader
 out vec3 vWorldPos_GS;
