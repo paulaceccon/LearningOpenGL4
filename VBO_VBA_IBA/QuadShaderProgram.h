@@ -36,16 +36,6 @@ public:
 	**/
 	void CreateShaderProgram();
 
-	/**
-	*  Turns on/off the wireframe view mode.
-	**/
-	void SetWireframeMode(int wireframeMode);
-
-	/**
-	*  Change tessellation interpolation mode.
-	**/
-	void SetInterpolationMode(int interpolationMode);
-
 private:
 	/**
 	*  Constructs the model, defining its coordinates.

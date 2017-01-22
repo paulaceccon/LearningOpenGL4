@@ -1,4 +1,4 @@
-#include "PlaneShaderProgram.h"
+#include "QuadShaderProgram.h"
 
 #include <glm/gtc/type_ptr.hpp> 
 
@@ -31,7 +31,7 @@ void QuadShaderProgram::CreateShaderProgram()
 }
 
 
-void QuadShaderProgram::DrawPlane(const glm::mat4 &Projection, const glm::mat4 &ModelView)
+void QuadShaderProgram::DrawModel(const glm::mat4 &projection, const glm::mat4 &modelView)
 {
 	_modelView = modelView;
 	_projection = projection;
@@ -41,7 +41,7 @@ void QuadShaderProgram::DrawPlane(const glm::mat4 &Projection, const glm::mat4 &
 	{
 		glBindVertexArray(_vao);
 		LoadUniformVariables();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, _modelIndices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 	UnBind();
@@ -50,21 +50,17 @@ void QuadShaderProgram::DrawPlane(const glm::mat4 &Projection, const glm::mat4 &
 
 void QuadShaderProgram::BuildModel()
 {
-	_modelCoordinates = { 1.0f, 1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f, -1.0f, 0.0f };
+	_modelCoordinates = {  1.0f,  1.0f, 0.0f,    // 0
+		                  -1.0f,  1.0f, 0.0f,    // 1
+		                  -1.0f, -1.0f, 0.0f,    // 2
+		                   1.0f, -1.0f, 0.0f };  // 3
 
 	_modelColors = { 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 
-		0.0f, 1.0f, 0.0f, 
-		0.0f, 1.0f, 0.0f, 
-		0.0f, 0.0f, 1.0f, 
-		0.0f, 1.0f, 0.0f };
+		             0.0f, 0.0f, 1.0f, 
+		             0.0f, 1.0f, 0.0f, 
+                     0.0f, 0.0f, 1.0f };
 
-	_modelIndices { 0, 1, 2, 0, 2, 3};
+	_modelIndices = { 0, 1, 2, 0, 2, 3};
 }
 
 
@@ -84,7 +80,7 @@ void QuadShaderProgram::BuildVAO()
 	// Generate and bind the index buffer object
 	glGenBuffers(1, &_ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLuint), _modelIndices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelIndices.size() * sizeof(GLuint), &_modelIndices[0], GL_STATIC_DRAW);
 
 	LoadAttributeVariables();
 
