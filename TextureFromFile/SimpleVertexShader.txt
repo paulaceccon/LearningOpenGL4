@@ -1,0 +1,15 @@
+#version 410 core
+
+uniform mat4 mvMatrix;
+uniform mat4 pMatrix;
+
+in vec4 vPosition;
+in vec3 texCoord;
+
+// Input for the fragment shader
+smooth out vec3 uvt;
+
+void main() {
+	gl_Position = pMatrix * mvMatrix * vPosition;
+	uvt = texCoord;
+}    

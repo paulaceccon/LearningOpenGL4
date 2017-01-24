@@ -1,0 +1,12 @@
+#version 410 core
+
+uniform sampler3D tex;
+
+in vec3 uvt;
+out vec4 fragColor;
+
+void main()
+{ 
+   vec3 color = texture(tex, uvt).rrr;
+   fragColor.rgb = color;
+}
