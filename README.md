@@ -17,6 +17,10 @@ Topics:
 - [ ] Deferred Shading (*refactoring*)
 - [x] Tesselation
 - [x] Tesselation + PNTriangles
+
+Bonus:
+- [ ] Arcball
+- [ ] Gizmos
   
   Tesselation controls:
   * W - wireframe mode on*/off
