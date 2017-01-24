@@ -28,4 +28,4 @@ _*_ *default*
 
 Tips for setting OpenGL depencies on VS can be found [here](http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express).
 
-Running in terminal using `clang++ -std=c++11 -stdlib=libc++ -Weverything *.cpp -framework OpenGL -L/usr/local/Cellar/glew/2.0.0/lib/ -L/usr/local/Cellar/glfw/3.2.1/lib -lglew -lglfw -I/usr/local/Cellar/glew/2.0.0/include/ -I/usr/local/Cellar/glfw/3.2.1/include -I/usr/local/Cellar/glm/0.9.8.3/include -Idir`.
+Running in terminal using `clang++ -std=c++11 -stdlib=libc++ -Wall *.cpp -framework OpenGL -L/usr/local/Cellar/glew/2.0.0/lib/ -L/usr/local/Cellar/glfw/3.2.1/lib -lglew -lglfw -I/usr/local/Cellar/glew/2.0.0/include/ -I/usr/local/Cellar/glfw/3.2.1/include -I/usr/local/Cellar/glm/0.9.8.3/include -Idir`.
