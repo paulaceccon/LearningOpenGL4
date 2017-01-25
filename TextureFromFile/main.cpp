@@ -83,6 +83,7 @@ static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
 	width = w;
 	height = h;
+	glViewport(0, 0, width, height);
  	Projection = glm::perspective(45.0f, (float)width / height, .1f, 100.f);
 }
 
@@ -179,12 +180,17 @@ int main(void)
 	cubeShader.CreateShaderProgram();
 	
 	unsigned int max = cubeShader.MaxDimension();
-// 	glm_ModelViewMatrix.push(glm_ModelViewMatrix.top());
-// 	glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3((float)cubeShader.GetHeight()/max, 
-// 																				(float)cubeShader.GetWidth() /max,
-// 																				(float)cubeShader.GetDepth() /max));
-// 	glm_ModelViewMatrix.pop();
-																
+	glm_ModelViewMatrix.push(glm_ModelViewMatrix.top());
+	{
+		glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3((float)cubeShader.GetHeight()/max, 
+																					(float)cubeShader.GetWidth() /max,
+																					(float)cubeShader.GetDepth() /max));
+		printf("%d %f %f %f/n", max, (float)cubeShader.GetHeight()/max, 
+									 (float)cubeShader.GetWidth() /max,
+									 (float)cubeShader.GetDepth() /max);																			
+	}
+	glm_ModelViewMatrix.pop();
+														
 
 	// Main Loop  
 	while (!glfwWindowShouldClose(window))
