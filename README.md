@@ -5,8 +5,8 @@ I tried to use OO to provide some sort of abstraction to commom definitions requ
 
 Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-truc.net/). C++11 is also required.
 
-Topics:
-
+---
+#### Topics:
 - [x] Skeleton 
 - [x] VBO+VAO
 - [x] VBO+VAO+IBO 
@@ -19,10 +19,12 @@ Topics:
 - [x] Tesselation
 - [x] Tesselation + PNTriangles
 
-Bonus:
+---
+#### Bonus:
 - [ ] Arcball
 - [ ] Gizmos
   
+---  
   Tesselation controls:
   * W - wireframe mode on*/off
   * I - interpolation mode (linear, quadratic*)
@@ -33,4 +35,4 @@ _*_ *default*
 
 Tips for setting OpenGL depencies on VS can be found [here](http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express).
 
-Running in terminal using `clang++ -std=c++11 -stdlib=libc++ -Wall *.cpp -framework OpenGL -L/usr/local/Cellar/glew/2.0.0/lib/ -L/usr/local/Cellar/glfw/3.2.1/lib -lglew -lglfw -I/usr/local/Cellar/glew/2.0.0/include/ -I/usr/local/Cellar/glfw/3.2.1/include -I/usr/local/Cellar/glm/0.9.8.3/include -Idir`.
+Running in terminal using `clang++ -std=c++11 -stdlib=libc++ -Wall *.cpp ../Common/*.cpp -framework OpenGL -L/usr/local/Cellar/glew/2.0.0/lib/ -L/usr/local/Cellar/glfw/3.2.1/lib -lglew -lglfw -I/usr/local/Cellar/glew/2.0.0/include/ -I/usr/local/Cellar/glfw/3.2.1/include -I/usr/local/Cellar/glm/0.9.8.3/include -Idir -I/../Common`.
