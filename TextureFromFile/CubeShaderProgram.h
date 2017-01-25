@@ -104,7 +104,7 @@ private:
 	glm::mat4 _projection;
 
 	// Vector containing the model coordinates, indices and colors.
-	std::vector<float> _modelCoordinates, _modelColors, _textureCoordinates;
+	std::vector<float> _modelCoordinates, _textureCoordinates;
 	std::vector<int> _modelIndices;
 
 	// Program status.

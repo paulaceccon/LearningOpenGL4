@@ -1,3 +1,6 @@
+#ifndef _SHADERMANAGER_H_
+#define _SHADERMANAGER_H_
+
 // Include OpenGL
 #include <GL/glew.h>  
 
@@ -16,3 +19,4 @@ private:
 	void printShaderLog(GLuint shader);
 };
 
+#endif

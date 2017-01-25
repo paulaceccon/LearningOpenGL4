@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SIMPLEOBJLOADER_H_
+#define _SIMPLEOBJLOADER_H_
 
 // Include the standard C++ headers  
 #include <glm/glm.hpp>
@@ -40,3 +41,4 @@ public:
 	bool ReadOFF(const char* path, std::vector<float> &vertices, std::vector<float> &normals, std::vector<unsigned int> &triangulation);
 };
 
+#endif

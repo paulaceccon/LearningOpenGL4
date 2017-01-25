@@ -1,3 +1,6 @@
+#ifndef _PROGRAMMANAGER_H_
+#define _PROGRAMMANAGER_H_
+
 // Include OpenGL
 #include <GL/glew.h> 
 
@@ -123,3 +126,4 @@ private:
 	GLuint _vertexShader, _fragmentShader, _tesselationControlShader, _tesselationEvaluationShader, _geometryShader;
 };
 
+#endif
