@@ -1,0 +1,17 @@
+#version 410 core
+
+uniform mat4 mvMatrix;
+uniform mat4 pMatrix;
+
+in vec4 vPosition;
+in vec3 vColor;
+
+// Input for the fragment shader
+smooth out vec3 vPos_FS;
+smooth out vec3 vColor_FS;
+
+void main() 
+{
+	gl_Position =  pMatrix * mvMatrix * vPosition; 
+	vColor_FS = vColor;      
+}                                     
