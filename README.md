@@ -13,6 +13,7 @@ Topics:
 - [ ] Texture (*refactoring*)
   - From image
   - From file
+- [ ] Lighting
 - [ ] Instancing (*refactoring*)
 - [ ] Deferred Shading (*refactoring*)
 - [x] Tesselation
