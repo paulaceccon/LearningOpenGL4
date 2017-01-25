@@ -1,5 +1,3 @@
-#pragma once
-
 // Include OpenGL
 #include <GL/glew.h>  
 

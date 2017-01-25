@@ -1,6 +1,12 @@
-#include "CubeShaderProgram.h"
-
+// Include OpenGL  
 #include <glm/gtc/type_ptr.hpp> 
+
+// Include the standard C++ headers  
+#include <limits>
+#include <algorithm>
+
+// Include custom classes
+#include "CubeShaderProgram.h"
 
 
 CubeShaderProgram::CubeShaderProgram()
@@ -55,21 +61,20 @@ GLuint CubeShaderProgram::UploadTextureFromFile(std::string path)
   	if (file.is_open())
   	{
       	// Reading data dimension
-  	  	int width, height, depth;
-  	  	file >> width;
-  	  	file >> height;
-  	  	file >> depth;
+  	  	file >> _width;
+  	  	file >> _height;
+  	  	file >> _depth;
   	  	
-  	  	printf("Texture data: %d, %d, %d\n", width, height, depth);
+  	  	printf("Texture data: %d, %d, %d\n", _width, _height, _depth);
   	  	
   	  	// Creating buffer
-  	  	unsigned char buffer[height][width][depth];
+  	  	unsigned char buffer[_height][_width][_depth];
   	  
   	  	// Reading content
   	  	int v;
-    	for (int i = 0; i < height; i ++) {
-        	for (int j = 0; j < width; j ++) {
-            	for (int k = 0; k < depth; k ++) {
+    	for (unsigned int i = 0; i < _height; i ++) {
+        	for (unsigned int j = 0; j < _width; j ++) {
+            	for (unsigned int k = 0; k < _depth; k ++) {
         			file >> v;
         			buffer[i][j][k] = v * 255;
       			}
@@ -87,7 +92,7 @@ GLuint CubeShaderProgram::UploadTextureFromFile(std::string path)
     	glBindTexture(GL_TEXTURE_3D, textureID);
 
     	// Give the image to OpenGL
-    	glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, height, width, depth, 0, GL_RED, GL_UNSIGNED_BYTE, buffer);
+    	glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, _height, _width, _depth, 0, GL_RED, GL_UNSIGNED_BYTE, buffer);
      
     	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -101,6 +106,32 @@ GLuint CubeShaderProgram::UploadTextureFromFile(std::string path)
   	return 0;
 }
 
+const int CubeShaderProgram::MaxDimension() const
+{
+	int max = std::numeric_limits<int>::min();
+	if ((int)_width  > max)                   
+		max = _width;                     
+	if ((int)_height > max)                    
+		max = _height;
+	if ((int)_depth  > max)
+		max = _depth;	
+	return max;
+}
+
+const unsigned int CubeShaderProgram::GetWidth() const
+{
+	return _width;
+}
+
+const unsigned int CubeShaderProgram::GetHeight() const
+{
+	return _height;
+}
+
+const unsigned int CubeShaderProgram::GetDepth() const
+{
+	return _depth;
+}
 
 void CubeShaderProgram::BuildModel()
 {

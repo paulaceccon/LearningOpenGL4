@@ -1,6 +1,8 @@
-#include "QuadShaderProgram.h"
-
+// Include OpenGL
 #include <glm/gtc/type_ptr.hpp> 
+
+// Include custom C++ headers
+#include "QuadShaderProgram.h"
 
 
 QuadShaderProgram::QuadShaderProgram()

@@ -1,8 +1,8 @@
+// Include OpenGL
+#include <glm/gtc/type_ptr.hpp> 
+
 // Include custom C++ headers
 #include "QuadShaderProgram.h"
-
-// Include the standard C++ headers 
-#include <glm/gtc/type_ptr.hpp> 
 
 
 QuadShaderProgram::QuadShaderProgram()
@@ -53,16 +53,16 @@ void QuadShaderProgram::BuildModel()
 	_modelCoordinates = { 1.0f,  1.0f, 0.0f,
 		                  1.0f, -1.0f, 0.0f,
 		                 -1.0f,  1.0f, 0.0f,
-		-1.0f, 1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f, -1.0f, 0.0f };
+						 -1.0f, 1.0f, 0.0f,
+						  1.0f, -1.0f, 0.0f,
+						 -1.0f, -1.0f, 0.0f };
 
 	_modelColors = { 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 
-		0.0f, 1.0f, 0.0f, 
-		0.0f, 1.0f, 0.0f, 
-		0.0f, 0.0f, 1.0f, 
-		0.0f, 1.0f, 0.0f };
+					 0.0f, 0.0f, 1.0f, 
+					 0.0f, 1.0f, 0.0f, 
+					 0.0f, 1.0f, 0.0f, 
+					 0.0f, 0.0f, 1.0f, 
+					 0.0f, 1.0f, 0.0f };
 }
 
 

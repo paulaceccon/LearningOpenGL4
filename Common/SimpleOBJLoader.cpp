@@ -1,8 +1,10 @@
-// Include custom C++ headers
-#include "SimpleOBJLoader.h"
+// Include the standard C++ headers  
 #include <map>
 #include <fstream>
-#include <iostream>
+
+// Include custom C++ headers
+#include "SimpleOBJLoader.h"
+
 
 SimpleOBJLoader::SimpleOBJLoader()
 {
@@ -162,7 +164,7 @@ bool SimpleOBJLoader::ReadOFF(const char* path, std::vector<float> &vertices, st
 	std::ifstream fileMesh(path);
 	if (fileMesh.fail())
 	{
-		std::cout << "Falha ao abrir o arquivo: " << path << std::endl << std::endl;
+		printf("Falha ao abrir o arquivo %s\n", path);
 		return false;
 	}
 

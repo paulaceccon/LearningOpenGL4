@@ -1,8 +1,10 @@
 #ifndef _GLUTILS_H_
 #define _GLUTILS_H_
 
+// Include OpenGL  
 #include <GL/glew.h>
 
+// Include the standard C++ headers  
 #include <iostream>
 
 #define CheckOpenGLError() CheckGLError(__FILE__,__LINE__)

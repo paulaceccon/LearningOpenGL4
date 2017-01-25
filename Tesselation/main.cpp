@@ -5,13 +5,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 // Include the standard C++ headers  
-#include <stdio.h>  
-#include <stdlib.h> 
-#include <iostream>
 #include <stack>
 
 // Include custom classes
-#include "GLUtils.h"
+#include "../Common/GLUtils.h"
 #include "TesselationShaderProgram.h"
 
 
@@ -106,8 +103,29 @@ static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
 	width = w;
 	height = h;
-	glViewport(0, 0, width, height);
 	Projection = glm::perspective(45.0f, (float) width / height, 1.0f, 100.f);
+}
+
+
+// Shows FPS as window title
+void UpdateFPS(GLFWwindow* window) 
+{
+	static double previous_seconds = glfwGetTime();
+  	static int frame_count;
+  
+  	double current_seconds = glfwGetTime();
+  	double elapsed_seconds = current_seconds - previous_seconds;
+  
+  	if (elapsed_seconds > 0.25) 
+  	{
+    	previous_seconds = current_seconds;
+    	double fps = (double)frame_count / elapsed_seconds;
+    	char tmp[128];
+    	sprintf(tmp, "opengl @ fps: %.2f", fps);
+    	glfwSetWindowTitle(window, tmp);
+    	frame_count = 0;
+  	}
+  	frame_count++;
 }
 
 
@@ -187,11 +205,13 @@ int main(void)
 	}
 	tessShader.SetGeometryShader("Wireframe.txt");
 	tessShader.SetFragmentShader("SimpleFragShader.txt");
-	tessShader.CreateShaderProgram("lowres_bunny.obj");
+	tessShader.CreateShaderProgram("../Resources/obj/lowres_bunny.obj");
 
 	// Main Loop   
 	while (!glfwWindowShouldClose(window))
 	{
+		UpdateFPS(window);
+		
 		// Clear color buffer  
 		glClearColor(1, 1, 1, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

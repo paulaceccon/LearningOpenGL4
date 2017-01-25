@@ -1,8 +1,8 @@
-#include "ShaderManager.h"
-
 // Include the standard C++ headers 
 #include<fstream>
 
+// Include custom C++ headers
+#include "ShaderManager.h"
 
 ShaderManager::ShaderManager()
 {

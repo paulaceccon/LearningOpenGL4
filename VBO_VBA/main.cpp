@@ -10,8 +10,8 @@
 #include <iostream>
 #include <stack>
 
-// Include custom classes
-#include "GLUtils.h"
+// Include custom C++ headers
+#include "../Common/GLUtils.h"
 #include "QuadShaderProgram.h"
 
 #define PI 3.141592f  /* pi */
@@ -86,8 +86,29 @@ static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
 	width = w;
 	height = h;
-	glViewport(0, 0, width, height);
 	Projection = glm::perspective(45.0f, (float)width / height, 1.0f, 100.f);
+}
+
+
+// Shows FPS as window title
+void UpdateFPS(GLFWwindow* window) 
+{
+	static double previous_seconds = glfwGetTime();
+  	static int frame_count;
+  
+  	double current_seconds = glfwGetTime();
+  	double elapsed_seconds = current_seconds - previous_seconds;
+  
+  	if (elapsed_seconds > 0.25) 
+  	{
+    	previous_seconds = current_seconds;
+    	double fps = (double)frame_count / elapsed_seconds;
+    	char tmp[128];
+    	sprintf(tmp, "opengl @ fps: %.2f", fps);
+    	glfwSetWindowTitle(window, tmp);
+    	frame_count = 0;
+  	}
+  	frame_count++;
 }
 
 
@@ -161,6 +182,8 @@ int main(void)
 	// Main Loop  
 	while (!glfwWindowShouldClose(window))
 	{
+		UpdateFPS(window);
+		
 		// Clear color buffer  
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

@@ -1,9 +1,9 @@
+// Include OpenGL
+#include <glm/gtc/type_ptr.hpp> 
+
 // Include custom C++ headers
 #include "TesselationShaderProgram.h"
-#include "SimpleOBJLoader.h"
-
-// Include the standard C++ headers 
-#include <glm/gtc/type_ptr.hpp> 
+#include "../Common/SimpleOBJLoader.h"
 
 
 TesselationShaderProgram::TesselationShaderProgram()

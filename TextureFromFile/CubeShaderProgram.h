@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 
 // Include custom C++ headers
-#include "ProgramManager.h"
+#include "../Common/ProgramManager.h"
 
 
 class CubeShaderProgram : public virtual ProgramManager
@@ -35,13 +35,41 @@ public:
 	void CreateShaderProgram();
 	
 	/**
-	*  Create the tesselation shader program.
+	*  Upload and bind a texture from file.
 	*
 	*  \param path : Path to the file to be read.
 	*
 	*  \return : The texture ID, if everything works fine. 0, otherwise.
 	**/
 	GLuint UploadTextureFromFile(std::string);
+	
+	/**
+	*  Obtain the maximum dimension of the volume, for scaling purposes.
+	* 
+	*  \return : The maximum dimension (axis value) of the volume.
+	**/
+	const int MaxDimension() const;
+	
+	/**
+	*  Get the volume's width.
+	* 
+	*  \return : The volume width.
+	**/
+	const unsigned int GetWidth() const;
+	
+	/**
+	*  Get the volume's height.
+	* 
+	*  \return : The volume height.
+	**/
+	const unsigned int GetHeight() const;
+	
+	/**
+	*  Get the volume's depth.
+	* 
+	*  \return : The volume depth.
+	**/
+	const unsigned int GetDepth() const;
 
 private:
 	/**
@@ -64,6 +92,9 @@ private:
 	*  Load all uniform variables that a shader program need to run.
 	**/
 	void LoadUniformVariables();
+	
+	// Volume dimensions.
+	unsigned int _width, _height, _depth;
 
 	// Vertex array object, vertex buffer object, index buffer object.
 	GLuint _vao, _vbo[2], _ibo, _texture;

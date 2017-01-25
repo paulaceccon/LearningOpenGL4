@@ -1,11 +1,11 @@
-#pragma once
+// Include OpenGL
+#include <glm/glm.hpp>
 
 // Include the standard C++ headers  
 #include <vector>
-#include <glm/glm.hpp>
 
 // Include custom C++ headers
-#include "ProgramManager.h"
+#include "../Common/ProgramManager.h"
 
 
 class TesselationShaderProgram : public virtual ProgramManager
