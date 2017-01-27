@@ -1,7 +1,7 @@
 # LearningOpenGL4
 
 A repository containing codes showing examples of the features of OpenGL 4.x, using just the core profile.
-I tried to use OO to provide some sort of abstraction to commom definitions required to use this version of OpenGL.
+I tried to use OO to provide some sort of abstraction to commons definitions required to use the OpenGL Core.
 
 Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-truc.net/). C++11 is also required.
 
