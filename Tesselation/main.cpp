@@ -32,7 +32,7 @@ bool pnTriagles = true;
 std::stack<glm::mat4> glm_ModelViewMatrix;
 
 // Set the perspective matrix
-glm::mat4 Projection = glm::perspective(45.0f, (float) width / height, 1.0f, 100.f);
+glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float) width / height, 1.0f, 100.f);
 
 
 // Define a GLFW error callback  
@@ -101,9 +101,8 @@ static void ScrollCallback(GLFWwindow* window, double x, double y)
 // Define a GLFW resize callback
 static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
-	width = w;
-	height = h;
-	Projection = glm::perspective(45.0f, (float) width / height, 1.0f, 100.f);
+	glfwGetFramebufferSize(window, &width, &height);
+	Projection = glm::perspective(glm::radians(45.0f), (float) width / height, 1.0f, 100.f);
 }
 
 
@@ -180,9 +179,10 @@ int main(void)
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetWindowSizeCallback(window, WindowSizeCallback);
 	glfwSetScrollCallback(window, ScrollCallback);
+	glfwGetFramebufferSize(window, &width, &height);
 
 	// Set the view matrix
-	glm::mat4 ModelView = glm::lookAt(glm::vec3(0.0f, 3.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 ModelView = glm::lookAt(glm::vec3(0.0f, 0.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	// Initialize matrix stack
 	glm_ModelViewMatrix.push(ModelView);
@@ -211,6 +211,7 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		UpdateFPS(window);
+		glViewport(0, 0, width, height);
 		
 		// Clear color buffer  
 		glClearColor(1, 1, 1, 0);

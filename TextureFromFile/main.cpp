@@ -16,7 +16,7 @@
 
 // Interaction
 GLfloat alpha = 0.0f, beta = 0.0f;
-GLfloat zoom = 1.0f;
+GLfloat zoom = 1.0f, zoomz = 1.0f;
 GLint width = 640, height = 640;
 
 
@@ -24,7 +24,7 @@ GLint width = 640, height = 640;
 std::stack<glm::mat4> glm_ModelViewMatrix;
 
 // Set the perspective matrix
-glm::mat4 Projection = glm::perspective(45.0f, (float)width / height, 1.0f, 100.f);
+glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)width / height, 1.0f, 100.f);
 
 
 // Define a GLFW error callback  
@@ -64,6 +64,12 @@ static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 	case GLFW_KEY_PAGE_DOWN:
 		zoom += 0.25f;
 		break;
+	case GLFW_KEY_Z:
+		zoomz += 0.25;
+		break;
+	case GLFW_KEY_X:
+		zoomz -= 0.25;
+		break;	
 
 	default:
 		break;
@@ -81,10 +87,8 @@ static void ScrollCallback(GLFWwindow* window, double x, double y)
 // Define a GLFW resize callback
 static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
-	width = w;
-	height = h;
-	glViewport(0, 0, width, height);
- 	Projection = glm::perspective(45.0f, (float)width / height, .1f, 100.f);
+	glfwGetFramebufferSize(window, &width, &height);
+ 	Projection = glm::perspective(glm::radians(45.0f), (float)width / height, .1f, 100.f);
 }
 
 
@@ -161,6 +165,7 @@ int main(void)
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetWindowSizeCallback(window, WindowSizeCallback);
 	glfwSetScrollCallback(window, ScrollCallback);
+	glfwGetFramebufferSize(window, &width, &height);
 
 	// Set the view matrix
 	glm::mat4 ModelView = glm::lookAt(glm::vec3(0.0f, 0.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -180,22 +185,19 @@ int main(void)
 	cubeShader.CreateShaderProgram();
 	
 	unsigned int max = cubeShader.MaxDimension();
-	glm_ModelViewMatrix.push(glm_ModelViewMatrix.top());
-	{
-		glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3((float)cubeShader.GetHeight()/max, 
-																					(float)cubeShader.GetWidth() /max,
-																					(float)cubeShader.GetDepth() /max));
-		printf("%d %f %f %f/n", max, (float)cubeShader.GetHeight()/max, 
+
+		
+		printf("%d %f %f %f\n", max, (float)cubeShader.GetHeight()/max, 
 									 (float)cubeShader.GetWidth() /max,
 									 (float)cubeShader.GetDepth() /max);																			
-	}
-	glm_ModelViewMatrix.pop();
-														
-
+													
+	
 	// Main Loop  
 	while (!glfwWindowShouldClose(window))
 	{
 		UpdateFPS(window);
+		glViewport(0, 0, width, height);
+		
 		// Clear color buffer  
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -205,6 +207,10 @@ int main(void)
 			//------- ModelView Transformations
 			// Zoom in/out
 			zoom = (zoom < 0.25) ? 0.25 : zoom;
+			
+			glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3(1, 1, zoomz));
+																					
+																					
 			glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3(zoom, zoom, zoom));
 			// Rotation
 			glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), beta, glm::vec3(1.0, 0.0, 0.0));

@@ -25,7 +25,7 @@ GLint width = 640, height = 640;
 std::stack<glm::mat4> glm_ModelViewMatrix;
 
 // Set the perspective matrix
-glm::mat4 Projection = glm::perspective(45.0f, (float)width / height, 1.0f, 100.f);
+glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)width / height, 1.0f, 100.f);
 
 
 // Define a GLFW error callback  
@@ -82,10 +82,8 @@ static void ScrollCallback(GLFWwindow* window, double x, double y)
 // Define a GLFW resize callback
 static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
-	width = w;
-	height = h;
-	//glViewport(0, 0, width, height);
-    Projection = glm::perspective(45.0f, (float)width / height, .1f, 100.f);
+	glfwGetFramebufferSize(window, &width, &height);
+    Projection = glm::perspective(glm::radians(45.0f), (float)width / height, 1.0f, 100.f);
 }
 
 
@@ -162,6 +160,7 @@ int main(void)
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetWindowSizeCallback(window, WindowSizeCallback);
 	glfwSetScrollCallback(window, ScrollCallback);
+	glfwGetFramebufferSize(window, &width, &height);
 
 	// Set the view matrix
 	glm::mat4 ModelView = glm::lookAt(glm::vec3(0.0f, 0.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -189,6 +188,8 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		UpdateFPS(window);
+		glViewport(0, 0, width, height);
+		
 		// Clear color buffer  
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -214,7 +215,7 @@ int main(void)
 			glm_ModelViewMatrix.push(glm_ModelViewMatrix.top());
 			{
 				// Translation
-				glm_ModelViewMatrix.top() = glm::translate(glm_ModelViewMatrix.top(), glm::vec3(-7.0, -7.0, 0.0));
+				glm_ModelViewMatrix.top() = glm::translate(glm_ModelViewMatrix.top(), glm::vec3(-4.0, -4.0, 0.0));
 				// Rotation
 				glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), beta, glm::vec3(1.0, 0.0, 0.0));
 				glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), alpha, glm::vec3(0.0, 0.0, 1.0));
