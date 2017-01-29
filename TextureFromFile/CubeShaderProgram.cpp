@@ -17,7 +17,7 @@ CubeShaderProgram::CubeShaderProgram()
 	_ibo = 0;
 	
 	_width = 0, _height = 0, _depth = 0;
-	_currentX = 0.0, _currentY = 0.0, _currentZ = 0.0;
+	_currentX = 0.0, _currentY = 0.0, _currentZ = 1.0;
 	
 	_modelCoordinates.resize(24, 0);
 	_modelIndices.resize(36, 0);
@@ -182,16 +182,18 @@ void CubeShaderProgram::TextureSlicing(int sliceX, int sliceY, int sliceZ)
  	if (sliceZ > 0)
  	{
  		sliceZ = std::min(sliceZ, (int) _depth);
- 		_modelCoordinates[2]   = _modelCoordinates[5]   = _modelCoordinates[8]   = _modelCoordinates[11]   = 1.0 - sliceZ * (2.0/_depth); 
+ 		_currentZ = 1.0 - sliceZ * (2.0/_depth);
+ 		_modelCoordinates[2]   = _modelCoordinates[5]   = _modelCoordinates[8]   = _modelCoordinates[11]   = _currentZ; 
  		_textureCoordinates[2] = _textureCoordinates[5] = _textureCoordinates[8] = _textureCoordinates[11] = 1.0 - sliceZ * (1.0/_depth); 
+ 		
 	}
-	// else if (sliceZ < 0)
-// 	{
-// 		sliceZ = std::max(sliceZ, (int) _depth * -1);
-// 		_modelCoordinates[14]   = _modelCoordinates[17]   = _modelCoordinates[20]   = _modelCoordinates[23]   = 1.0 - sliceZ * (2.0/_depth) *-1; 
-// 		_textureCoordinates[14] = _textureCoordinates[17] = _textureCoordinates[20] = _textureCoordinates[23] =  sliceZ * (1.0/_depth) *-1;  
-//  		printf("z %f\n", _textureCoordinates[2]);
-// 	}
+	else if (sliceZ < 0)
+	{
+		// sliceZ = std::max(sliceZ, (int) _depth * -1);
+// 		_currentZ = std::min(1.0, _currentZ + sliceZ * (2.0/_depth));
+// 		_modelCoordinates[2]   = _modelCoordinates[5]   = _modelCoordinates[8]   = _modelCoordinates[11]   = _currentZ; 
+		//_textureCoordinates[14] = _textureCoordinates[17] = _textureCoordinates[20] = _textureCoordinates[23] =  sliceZ * (1.0/_depth) *-1; 
+	}
 }
 
 
