@@ -1,8 +1,9 @@
 #ifndef _GLUTILS_H_
 #define _GLUTILS_H_
 
-// Include OpenGL  
+// Include OpenGL
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 // Include the standard C++ headers  
 #include <iostream>
@@ -48,6 +49,18 @@ inline void CheckGLError(const char *text, unsigned int value)
 			result = glGetError();
 		}
 	}
+}
+
+// To print OpenGL matrices, such as projection and modelview 
+inline void PrintMatrix(const glm::mat4 &matrix)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+			 printf("%2.2lf ", (float)matrix[i][j]);
+		printf("\n");
+	}
+	printf("\n");																	
 }
 
 #endif
