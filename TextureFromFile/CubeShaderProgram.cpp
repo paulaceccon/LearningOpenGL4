@@ -15,6 +15,16 @@ CubeShaderProgram::CubeShaderProgram()
 	_vbo[0] = 0;
 	_vbo[1] = 0;
 	_ibo = 0;
+	
+	_width = 0, _height = 0, _depth = 0;
+	_currentX = 0.0, _currentY = 0.0, _currentZ = 0.0;
+	
+	_modelCoordinates.resize(24, 0);
+	_modelIndices.resize(36, 0);
+	_textureCoordinates.resize(24, 0);
+
+	_modelView  = glm::mat4(1.0);
+	_projection = glm::mat4(1.0);
 }
 
 
@@ -45,6 +55,7 @@ void CubeShaderProgram::DrawModel(const glm::mat4 &projection, const glm::mat4 &
 	_succeed = Bind();
 	if (_succeed)
 	{
+		BuildVAO();
 		glBindVertexArray(_vao);
 		LoadUniformVariables();
 		glDrawElements(GL_TRIANGLES, _modelIndices.size(), GL_UNSIGNED_INT, 0);
@@ -63,9 +74,7 @@ GLuint CubeShaderProgram::UploadTextureFromFile(std::string path)
       	// Reading data dimension
   	  	file >> _width;
   	  	file >> _height;
-  	  	file >> _depth;
-  	  	
-  	  	printf("Texture data: %d, %d, %d\n", _width, _height, _depth);
+  	  	file >> _depth;	 	  	
   	  	
   	  	// Creating buffer
   	  	unsigned char buffer[_height][_width][_depth];
@@ -157,14 +166,32 @@ void CubeShaderProgram::BuildModel()
                       3, 2, 6,
                       6, 7, 3 };
                       
-	_textureCoordinates = {  0.0, 0.0, 1.0,
+	_textureCoordinates = {  0.0, 0.0, 1.0,  
                    			 1.0, 0.0, 1.0,
-                   			 1.0, 1.0, 1.0,
+                   			 1.0, 1.0, 1.0,  
                    			 0.0, 1.0, 1.0,
                    			 0.0, 0.0, 0.0,
-                   			 1.0, 0.0, 0.0,
+                   			 1.0, 0.0, 0.0,  
                    			 1.0, 1.0, 0.0,
                    			 0.0, 1.0, 0.0 };
+}
+
+
+void CubeShaderProgram::TextureSlicing(int sliceX, int sliceY, int sliceZ)
+{
+ 	if (sliceZ > 0)
+ 	{
+ 		sliceZ = std::min(sliceZ, (int) _depth);
+ 		_modelCoordinates[2]   = _modelCoordinates[5]   = _modelCoordinates[8]   = _modelCoordinates[11]   = 1.0 - sliceZ * (2.0/_depth); 
+ 		_textureCoordinates[2] = _textureCoordinates[5] = _textureCoordinates[8] = _textureCoordinates[11] = 1.0 - sliceZ * (1.0/_depth); 
+	}
+	// else if (sliceZ < 0)
+// 	{
+// 		sliceZ = std::max(sliceZ, (int) _depth * -1);
+// 		_modelCoordinates[14]   = _modelCoordinates[17]   = _modelCoordinates[20]   = _modelCoordinates[23]   = 1.0 - sliceZ * (2.0/_depth) *-1; 
+// 		_textureCoordinates[14] = _textureCoordinates[17] = _textureCoordinates[20] = _textureCoordinates[23] =  sliceZ * (1.0/_depth) *-1;  
+//  		printf("z %f\n", _textureCoordinates[2]);
+// 	}
 }
 
 
@@ -204,7 +231,7 @@ void CubeShaderProgram::LoadUniformVariables()
 {
 	glm::mat4 MV = _modelView;
 	glm::mat4 P = _projection;
-
+	
 	// OpenGL Matrices 
 	GLuint ModelView_location = glGetUniformLocation(GetProgramID(), "mvMatrix");
 	glUniformMatrix4fv(ModelView_location, 1, GL_FALSE, glm::value_ptr(MV));

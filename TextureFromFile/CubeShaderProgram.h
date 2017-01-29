@@ -1,8 +1,9 @@
+// Include OpenGl
+#include <glm/glm.hpp>
+
 // Include the standard C++ headers  
 #include <vector>
 #include <fstream>
-#include <string>
-#include <glm/glm.hpp>
 
 // Include custom C++ headers
 #include "../Common/ProgramManager.h"
@@ -35,20 +36,20 @@ public:
 	void CreateShaderProgram();
 	
 	/**
-	*  Upload and bind a texture from file.
-	*
-	*  \param path : Path to the file to be read.
-	*
-	*  \return : The texture ID, if everything works fine. 0, otherwise.
-	**/
-	GLuint UploadTextureFromFile(std::string);
-	
-	/**
 	*  Obtain the maximum dimension of the volume, for scaling purposes.
 	* 
 	*  \return : The maximum dimension (axis value) of the volume.
 	**/
 	const int MaxDimension() const;
+	
+	/**
+	*  Set the slice to be showed.
+	*
+	*  \param sliceX : Slice in x.
+	*  \param sliceY : Slice in z.
+	*  \param sliceY : Slice in z.
+	**/
+	void TextureSlicing(int sliceX, int sliceY, int sliceZ);
 	
 	/**
 	*  Get the volume's width.
@@ -93,8 +94,20 @@ private:
 	**/
 	void LoadUniformVariables();
 	
+	/**
+	*  Upload and bind a texture from file.
+	*
+	*  \param path : Path to the file to be read.
+	*
+	*  \return : The texture ID, if everything works fine. 0, otherwise.
+	**/
+	GLuint UploadTextureFromFile(std::string);
+	
 	// Volume dimensions.
 	unsigned int _width, _height, _depth;
+	
+	// Texture slicing
+	float _currentX, _currentY, _currentZ;
 
 	// Vertex array object, vertex buffer object, index buffer object.
 	GLuint _vao, _vbo[2], _ibo, _texture;

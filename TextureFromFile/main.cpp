@@ -16,8 +16,9 @@
 
 // Interaction
 GLfloat alpha = 0.0f, beta = 0.0f;
-GLfloat zoom = 1.0f, zoomz = 1.0f;
+GLfloat zoom = 1.0f;
 GLint width = 640, height = 640;
+GLint sliceX = 0, sliceY = 0, sliceZ = 0;
 
 
 // Define the model view matrix stack
@@ -64,13 +65,44 @@ static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 	case GLFW_KEY_PAGE_DOWN:
 		zoom += 0.25f;
 		break;
-	case GLFW_KEY_Z:
-		zoomz += 0.25;
-		break;
 	case GLFW_KEY_X:
-		zoomz -= 0.25;
-		break;	
-
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
+		{
+			sliceX += 1;
+			printf("Key X\n");
+		}
+		else
+		{
+			sliceX -= 1;
+			printf("Key x\n");
+		}
+		break;
+	case GLFW_KEY_Y:
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
+		{
+			sliceY += 1;
+			printf("Key Y\n");
+		}
+		else
+		{
+			sliceY -= 1;
+			printf("Key y\n");
+		}
+		break;
+	case GLFW_KEY_Z:
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
+		{
+			sliceZ += 1;
+			printf("Key Z\n");
+			printf("%d \n", sliceZ);
+		}
+		else
+		{
+			sliceZ -= 1;
+			printf("Key z\n");
+			printf("%d \n", sliceZ);
+		}
+		break;
 	default:
 		break;
 	}
@@ -186,17 +218,12 @@ int main(void)
 	
 	unsigned int max = cubeShader.MaxDimension();
 
-		
-		printf("%d %f %f %f\n", max, (float)cubeShader.GetHeight()/max, 
-									 (float)cubeShader.GetWidth() /max,
-									 (float)cubeShader.GetDepth() /max);																			
-													
-	
 	// Main Loop  
 	while (!glfwWindowShouldClose(window))
 	{
 		UpdateFPS(window);
 		glViewport(0, 0, width, height);
+		cubeShader.TextureSlicing(sliceX, sliceY, sliceZ);
 		
 		// Clear color buffer  
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -206,21 +233,18 @@ int main(void)
 		{
 			//------- ModelView Transformations
 			// Zoom in/out
-			zoom = (zoom < 0.25) ? 0.25 : zoom;
-			
-			glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3(1, 1, zoomz));
-																					
+			zoom = (zoom < 0.25) ? 0.25 : zoom;																		
 																					
 			glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3(zoom, zoom, zoom));
 			// Rotation
-			glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), beta, glm::vec3(1.0, 0.0, 0.0));
+			glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), beta,  glm::vec3(1.0, 0.0, 0.0));
 			glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), alpha, glm::vec3(0.0, 0.0, 1.0));
 
-			glm_ModelViewMatrix.push(glm_ModelViewMatrix.top());
-			{
-				cubeShader.DrawModel(Projection, glm_ModelViewMatrix.top());
-			}
-			glm_ModelViewMatrix.pop();
+			glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3((float)cubeShader.GetHeight()/max, 
+																		                (float)cubeShader.GetWidth() /max, 
+																		                (float)cubeShader.GetDepth() /max));
+																		                																		                
+			cubeShader.DrawModel(Projection, glm_ModelViewMatrix.top());
 		}
 		glm_ModelViewMatrix.pop();
 
