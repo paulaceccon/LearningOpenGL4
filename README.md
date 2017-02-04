@@ -11,8 +11,8 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 - [x] VBO+VAO
 - [x] VBO+VAO+IBO 
 - [ ] Texture (*refactoring*)
-  - From image
-  - From file
+  - 2D
+  - 3D
 - [ ] Lighting
 - [ ] Instancing (*refactoring*)
 - [ ] Deferred Shading (*refactoring*)
