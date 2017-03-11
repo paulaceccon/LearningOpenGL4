@@ -59,6 +59,9 @@ private:
 	// Rotation axis
 	glm::vec3 _camAxis;
 	
+	// Rotation matrix
+	glm::mat4 _rotation;
+	
 	// Window's width and height
 	int _windowWidth, _windowHeight;
 };

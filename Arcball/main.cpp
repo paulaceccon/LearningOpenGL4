@@ -10,6 +10,7 @@
 // Include custom C++ headers
 #include "../Common/GLUtils.h"
 #include "CubeShaderProgram.h"
+#include  "Arcball.h"
 
 #define PI 3.141592f  /* pi */
 
@@ -19,12 +20,16 @@ GLfloat alpha = 0.0f, beta = 0.0f;
 GLfloat zoom = 1.0f;
 GLint width = 640, height = 640;
 
+double curr_pos_x, curr_pos_y, last_pos_x, last_pos_y;
+bool arcball_on = false;
+
 
 // Define the model view matrix stack
 std::stack<glm::mat4> glm_ModelViewMatrix;
 
 // Set the perspective matrix
 glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)width / height, 1.0f, 100.f);
+glm::mat4 sceneRotation, incrementRotation;
 
 Arcball arcball = Arcball(0.05, width, height);
 
@@ -80,11 +85,37 @@ static void ScrollCallback(GLFWwindow* window, double x, double y)
 }
 
 
+// Define a GLFW mouse callback
+static void MouseMoveCallback(GLFWwindow* window, double x, double y)
+{
+	curr_pos_x = x;
+	curr_pos_y = y;
+	
+}
+
+
+static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		if (action == GLFW_PRESS)
+		{
+			arcball_on = true;
+			glfwGetCursorPos(window, &last_pos_x, &last_pos_y);
+		}
+		if (action == GLFW_RELEASE)
+		{
+			arcball_on = false;
+			sceneRotation = incrementRotation * sceneRotation;
+		}
+	}		
+}
+
 // Define a GLFW resize callback
 static void WindowSizeCallback(GLFWwindow* window, int w, int h)
 {
 	glfwGetFramebufferSize(window, &width, &height);
-    Projection = glm::perspective(45.0f, (float)width / height, 1.0f, 100.f);
+    Projection = glm::perspective(glm::radians(45.0f), (float)width / height, 1.0f, 100.f);
 }
 
 
@@ -161,11 +192,13 @@ int main(void)
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetWindowSizeCallback(window, WindowSizeCallback);
 	glfwSetScrollCallback(window, ScrollCallback);
+	glfwSetCursorPosCallback(window, MouseMoveCallback);
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 	glfwGetFramebufferSize(window, &width, &height);
 
 	// Set the view matrix
 	glm::mat4 ModelView = glm::lookAt(glm::vec3(0.0f, 0.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
+	
 	// Initialize matrix stack
 	glm_ModelViewMatrix.push(ModelView);
 
@@ -194,18 +227,25 @@ int main(void)
 		{
 			//------- ModelView Transformations
 			// Rotation
-			glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), beta, glm::vec3(1.0, 0.0, 0.0));
-			glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), alpha, glm::vec3(0.0, 0.0, 1.0));
+			//glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), beta, glm::vec3(1.0, 0.0, 0.0));
+			//glm_ModelViewMatrix.top() = glm::rotate(glm_ModelViewMatrix.top(), alpha, glm::vec3(0.0, 0.0, 1.0));
+			// Arcball
+			if (arcball_on)
+			{
+				arcball.CalculateRotationAttributes(last_pos_x, last_pos_y, curr_pos_x, curr_pos_y);
+				incrementRotation = arcball.GetViewRotationMatrix();
+				glm_ModelViewMatrix.top() *= incrementRotation;
+			}
+			
+			glm_ModelViewMatrix.top() *= sceneRotation;
+			
+			
 			// Zoom in/out
 			zoom = (zoom < 0.25) ? 0.25 : zoom;
 			glm_ModelViewMatrix.top() = glm::scale(glm_ModelViewMatrix.top(), glm::vec3(zoom, zoom, zoom));
 				
 			// Cube
-			glm_ModelViewMatrix.push(glm_ModelViewMatrix.top());
-			{	
-				cubeShader.DrawModel(Projection, glm_ModelViewMatrix.top());
-			}
-			glm_ModelViewMatrix.pop();
+			cubeShader.DrawModel(Projection, glm_ModelViewMatrix.top());
 		}
 		glm_ModelViewMatrix.pop();
 
