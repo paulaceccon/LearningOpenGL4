@@ -21,8 +21,8 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 
 ---
 #### Bonus:
-- [ ] Arcball
-- [ ] Gizmos
+- [x] Arcball
+- [x] Gizmos
   
 ---  
   Tesselation controls:
