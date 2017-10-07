@@ -20,9 +20,11 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 - [x] Tesselation + PNTriangles
 
 ---
-#### Bonus:
+#### Others:
 - [x] Arcball
 - [x] Gizmos
+
+<img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Arcball.png" height="300px" hspace="20"> <img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Tesselation.png" height="300px" hspace="20">
   
 ---  
   Tesselation controls:
