@@ -10,9 +10,7 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 - [x] Skeleton 
 - [x] VBO+VAO
 - [x] VBO+VAO+IBO 
-- [ ] Texture (*refactoring*)
-  - 2D
-  - 3D
+- [x] Texture
 - [ ] Lighting
 - [ ] Instancing (*refactoring*)
 - [ ] Deferred Shading (*refactoring*)
