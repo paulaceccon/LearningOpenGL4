@@ -65,44 +65,6 @@ static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 	case GLFW_KEY_PAGE_DOWN:
 		zoom += 0.25f;
 		break;
-	case GLFW_KEY_X:
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
-		{
-			sliceX += 1;
-			printf("Key X\n");
-		}
-		else
-		{
-			sliceX -= 1;
-			printf("Key x\n");
-		}
-		break;
-	case GLFW_KEY_Y:
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
-		{
-			sliceY += 1;
-			printf("Key Y\n");
-		}
-		else
-		{
-			sliceY -= 1;
-			printf("Key y\n");
-		}
-		break;
-	case GLFW_KEY_Z:
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
-		{
-			sliceZ += 1;
-			printf("Key Z\n");
-			printf("%d \n", sliceZ);
-		}
-		else
-		{
-			sliceZ -= 1;
-			printf("Key z\n");
-			printf("%d \n", sliceZ);
-		}
-		break;
 	default:
 		break;
 	}
@@ -223,7 +185,6 @@ int main(void)
 	{
 		UpdateFPS(window);
 		glViewport(0, 0, width, height);
-		cubeShader.TextureSlicing(sliceX, sliceY, sliceZ);
 		
 		// Clear color buffer  
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
