@@ -22,7 +22,7 @@ Dependencies rely on [GLEW](http://glew.sourceforge.net/), [GLFW](http://www.glf
 - [x] Arcball
 - [x] Gizmos
 
-<img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Arcball.png" height="250px" hspace="2"> <img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Texture.png" height="250px" hspace="2"> <img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Tesselation.png" height="250px" hspace="2">
+<img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Arcball.png" height="270px" hspace="2"> <img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Texture.png" height="270px" hspace="2"> <img src="https://github.com/paulaceccon/LearningOpenGL4/blob/master/Screenshots/Tesselation.png" height="270px" hspace="2">
   
 ---  
   Tesselation controls:
